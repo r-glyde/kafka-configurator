@@ -1,0 +1,4 @@
+jdk:
+  - openjdk8
+install:
+   - sbt 'clean; test; publishM2'
