@@ -10,7 +10,8 @@ object Docker {
     packageName in docker := packageName.value,
     dockerBaseImage := "alpine:3.13.0",
     dockerUpdateLatest := updateLatest.value,
-    dockerRepository := Some("skyuk"),
+    dockerRepository := Some("ghcr.io/r-glyde"),
+    dockerLabels := Map("org.opencontainers.image.source" -> "https://github.com/r-glyde/kafka-configurator"),
     dockerCommands ++= Seq(
       Cmd("USER", "root"),
       Cmd("RUN", "apk add --no-cache openjdk11-jre")

@@ -1,8 +1,9 @@
 import Aliases._
-import Bintray._
 import BuildInfo._
 import Release._
 import Docker._
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val kafkaVersion = "2.3.1"
 
@@ -28,6 +29,12 @@ val dependencies = Seq(
   "org.mockito"                 % "mockito-all"                % "1.10.19"    % Test
 ) ++ kafkaDeps
 
+lazy val user = sys.env.getOrElse("GITHUB_USER", "NO")
+lazy val token = sys.env.getOrElse("GITHUB_TOKEN", "STOP")
+
+publishTo := Some("GitHub Package Registry (r-glyde/kafka-configurator)" at "https://maven.pkg.github.com/r-glyde/kafka-configurator")
+credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", user, token)
+
 val root = (project in file("."))
   .enablePlugins(BuildInfoPlugin, JavaAppPackaging, UniversalDeployPlugin, DockerPlugin, AshScriptPlugin)
   .settings(
@@ -41,6 +48,5 @@ val root = (project in file("."))
     fork in run := true,
     buildInfoSettings,
     releaseSettings,
-    bintraySettings,
     dockerSettings
   )

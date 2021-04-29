@@ -25,7 +25,7 @@ To create the executable in the `target/universal/stage` directory: `sbt stage`.
 
 1. Follow the [sbt-bintray publishing guidelines](https://github.com/sbt/sbt-bintray#publishing) to ensure you are
    authenticated with Bintray.  Note that you need to be a member of the `sky-uk` Bintray organization. 
-2. Run `docker login --username=<username>` and when prompted add the password for your Docker Hub account. Note that you need to be a member of the `skyuk` Docker Hub organization.
+2. Run `echo $GITHUB_TOKEN | docker login https://ghcr.io -u <username> --password-stdin` and when prompted add the password for your Docker Hub account. Note that you need to be a member of the `skyuk` Docker Hub organization.
 3. Run `sbt ciRelease` to perform the release of the zip/tgz binaries to Bintray and the Docker artifact to Docker Hub.
 4. Check you are happy with the draft publication of the new version [here](https://bintray.com/sky-uk/oss-maven/kafka-configurator)
    and, if so, run `sbt bintrayRelease` to make the new version publicly accessible. Note that the Docker Image will be immediately live and therefore will need to be deleted if there has been a problem.
